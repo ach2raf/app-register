@@ -1,0 +1,13 @@
+<div class="modal-header">
+  <h4 class="modal-title text-capitalize">{{ pokemonDetail?.name }}</h4>
+  <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss()"></button>
+</div>
+<div class="modal-body text-center">
+  <img [src]="`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonDetail?.id}.png`"
+    alt="pokemon">
+  <p>Height: {{ pokemonDetail?.height }}</p>
+  <p>Weight: {{ pokemonDetail?.weight }}</p>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-outline-secondary" (click)="activeModal.close()">Close</button>
+</div>

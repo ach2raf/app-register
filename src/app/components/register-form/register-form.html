@@ -1,0 +1,118 @@
+<div class="row justify-content-center">
+  <div class="col-md-8">
+    <h1 class="mb-4">Registro</h1>
+
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" novalidate>
+
+      <h2 class="h4 mb-3">Datos personales</h2>
+
+      <div class="mb-3">
+        <label for="first-name" class="form-label">Nombre <span class="text-danger">*</span></label>
+        <input id="first-name" type="text" formControlName="firstName" class="form-control"
+          [class.is-invalid]="isInvalidField('firstName')" />
+        @if (hasError('firstName', 'required')) { <div class="invalid-feedback">El nombre es obligatorio</div> }
+        @if (hasError('firstName', 'minlength')) { <div class="invalid-feedback">Mínimo 2 caracteres</div> }
+        @if (hasError('firstName', 'maxlength')) { <div class="invalid-feedback">Máximo 30 caracteres</div> }
+        @if (hasError('firstName', 'pattern')) { <div class="invalid-feedback">Solo se permiten letras</div> }
+      </div>
+
+      <div class="mb-3">
+        <label for="last-name" class="form-label">Apellidos <span class="text-danger">*</span></label>
+        <input id="last-name" type="text" formControlName="lastName" class="form-control"
+          [class.is-invalid]="isInvalidField('lastName')" />
+        @if (hasError('lastName', 'required')) { <div class="invalid-feedback">Los apellidos son obligatorios</div> }
+        @if (hasError('lastName', 'minlength')) { <div class="invalid-feedback">Mínimo 2 caracteres</div> }
+        @if (hasError('lastName', 'maxlength')) { <div class="invalid-feedback">Máximo 50 caracteres</div> }
+        @if (hasError('lastName', 'pattern')) { <div class="invalid-feedback">Solo se permiten letras</div> }
+      </div>
+
+      <div class="mb-3">
+        <label for="dni" class="form-label">DNI/NIE <span class="text-danger">*</span></label>
+        <input id="dni" type="text" formControlName="dni" class="form-control"
+          [class.is-invalid]="isInvalidField('dni')" />
+        @if (hasError('dni', 'required')) { <div class="invalid-feedback">El DNI/NIE es obligatorio</div> }
+        @if (hasError('dni', 'pattern')) { <div class="invalid-feedback">Formato no válido</div> }
+      </div>
+
+      <div class="mb-4">
+        <label for="phone" class="form-label">Teléfono móvil <span class="text-danger">*</span></label>
+        <input id="phone" type="tel" formControlName="phone" class="form-control"
+          [class.is-invalid]="isInvalidField('phone')" />
+        @if (isInvalidField('phone')) { <div class="invalid-feedback">Introduce un móvil español válido</div> }
+      </div>
+
+      <h2 class="h4 mb-3">Datos de la cuenta</h2>
+
+      <div class="mb-3">
+        <label for="username" class="form-label">Nombre de usuario <span class="text-danger">*</span></label>
+        <input id="username" type="text" formControlName="username" class="form-control"
+          [class.is-invalid]="isInvalidField('username')" />
+        @if (hasError('username', 'required')) { <div class="invalid-feedback">El usuario es obligatorio</div> }
+        @if (hasError('username', 'minlength') || hasError('username', 'maxlength')) {
+          <div class="invalid-feedback">Entre 4 y 15 caracteres</div>
+        }
+        @if (hasError('username', 'pattern')) {
+          <div class="invalid-feedback">Debe empezar por letra y no contener espacios ni símbolos</div>
+        }
+      </div>
+
+      <div class="mb-3">
+        <label for="email" class="form-label">Email <span class="text-danger">*</span></label>
+        <input id="email" type="email" formControlName="email" class="form-control"
+          [class.is-invalid]="isInvalidField('email')" />
+        @if (hasError('email', 'required')) { <div class="invalid-feedback">El email es obligatorio</div> }
+        @if (hasError('email', 'email')) { <div class="invalid-feedback">Formato de email no válido</div> }
+      </div>
+
+      <div class="mb-4">
+        <label for="password" class="form-label">Contraseña <span class="text-danger">*</span></label>
+        <input id="password" type="password" formControlName="password" class="form-control"
+          [class.is-invalid]="isInvalidField('password')" />
+        @if (hasError('password', 'required')) { <div class="invalid-feedback">La contraseña es obligatoria</div> }
+        @if (hasError('password', 'minlength')) { <div class="invalid-feedback">Mínimo 8 caracteres</div> }
+        @if (hasError('password', 'maxlength')) { <div class="invalid-feedback">Máximo 20 caracteres</div> }
+        @if (missing('password', hasUpper)) { <div class="invalid-feedback">Debe incluir una mayúscula</div> }
+        @if (missing('password', hasLower)) { <div class="invalid-feedback">Debe incluir una minúscula</div> }
+        @if (missing('password', hasNumber)) { <div class="invalid-feedback">Debe incluir un número</div> }
+        @if (missing('password', hasSpecial)) { <div class="invalid-feedback">Debe incluir un carácter especial</div> }
+      </div>
+
+      <h2 class="h4 mb-3">Preferencias del curso</h2>
+
+      <div class="mb-3">
+        <label for="course" class="form-label">Curso de interés <span class="text-danger">*</span></label>
+        <select id="course" formControlName="course" class="form-select"
+          [class.is-invalid]="isInvalidField('course')">
+          <option value="">Selecciona un curso</option>
+          @for (c of courses; track c) {
+            <option [value]="c">{{ c }}</option>
+          }
+        </select>
+        @if (isInvalidField('course')) { <div class="invalid-feedback">Selecciona un curso</div> }
+      </div>
+
+      <div class="mb-3">
+        <label for="hours" class="form-label">Horas disponibles a la semana <span class="text-danger">*</span></label>
+        <input id="hours" type="number" formControlName="hours" class="form-control"
+          [class.is-invalid]="isInvalidField('hours')" />
+        @if (isInvalidField('hours')) { <div class="invalid-feedback">Entre 2 y 40 horas</div> }
+      </div>
+
+      <div class="mb-3">
+        <label for="postal-code" class="form-label">Código postal <span class="text-danger">*</span></label>
+        <input id="postal-code" type="text" formControlName="postalCode" class="form-control"
+          [class.is-invalid]="isInvalidField('postalCode')" />
+        @if (isInvalidField('postalCode')) { <div class="invalid-feedback">Código postal no válido</div> }
+      </div>
+
+      <div class="form-check mb-4">
+        <input id="terms" type="checkbox" formControlName="terms" class="form-check-input"
+          [class.is-invalid]="isInvalidField('terms')" />
+        <label for="terms" class="form-check-label">Acepto las condiciones</label>
+        @if (isInvalidField('terms')) { <div class="invalid-feedback">Debes aceptar las condiciones</div> }
+      </div>
+
+      <button type="submit" class="btn btn-primary">Enviar</button>
+    </form>
+  </div>
+</div>
